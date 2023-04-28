@@ -53,7 +53,7 @@ RUN superset db upgrade && \
                                 --password $SUPERSET_ADMIN_PASS && \
     superset init
 
-EXPOSE 8088
+EXPOSE 9088
 
 COPY entry.sh /bin
 ENTRYPOINT ["bash", "/bin/entry.sh"]
