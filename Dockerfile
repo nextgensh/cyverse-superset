@@ -31,27 +31,13 @@ RUN pip install PyAthena
 
 ENV PATH=$PATH:/home/superset/.local/bin
 
-# The below commands will need the following environment variables to be correctly
+# entry.sh will need the following environment variables to be correctly
 # passed / set for them to work.
 # 1. SUPERSET_SECRET_KEY = ....
 # 2. SUPERSET_ADMIN_PASS = ....
 # 3. SUPERSET_ADMIN_USER = ....
 
 ENV FLASK_APP=superset
-ENV SUPERSET_SECRET_KEY="Zv8egPl3bZSGQcVjvrRcJDXQl6qF+kEuqVnFUArzRqD5s3qiFy31/oXP"
-ENV SUPERSET_ADMIN_USER="admin"
-ENV SUPERSET_ADMIN_PASS="admin"
-
-# Create a folder to find the external volume
-RUN mkdir supserset-sqlite
-
-ENV SUPERSET_HOME=/home/superset/superset-sqlite
-
-RUN superset db upgrade && \
-    superset fab create-admin --username $SUPERSET_ADMIN_USER --firstname "Superset" \
-                                --lastname "admin" --email "admin@foo.org" \
-                                --password $SUPERSET_ADMIN_PASS && \
-    superset init
 
 EXPOSE 9088
 

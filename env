@@ -1,0 +1,7 @@
+# These are env variables passed to the container at run-time.
+
+SUPERSET_ADMIN_USER=
+SUPERSET_ADMIN_PASS=
+# Used to encrypt and secure the local sqlite db. Generate using `openssl rand -base64 42`  
+SUPERSET_SECRET_KEY=
+IPLANT_USER=
