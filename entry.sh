@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' | envsubst > $HOME/.irods/irods_environment.json
 
-touch hello_world.txt
-
 # Create a folder to find the external volume
 mkdir -p work/home/$IPLANT_USER/superset-sqlite
 
@@ -15,3 +13,4 @@ superset db upgrade && \
 superset init
 
 exec superset run -h 0.0.0.0 -p 9088 --with-threads
+
