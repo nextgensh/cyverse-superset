@@ -2,9 +2,11 @@
 echo '{"irods_host": "data.cyverse.org", "irods_port": 1247, "irods_user_name": "$IPLANT_USER", "irods_zone_name": "iplant"}' | envsubst > $HOME/.irods/irods_environment.json
 
 # Create a folder to find the external volume
-mkdir -p work/home/$IPLANT_USER/superset-sqlite
+BASEDIR=/data-store/iplant/home/$IPLANT_USER/
+touch $BASEDIR/testing.txt
+mkdir $BASEDIR/superset-sqlite
 
-export SUPERSET_HOME=/home/superset/work/home/$IPLANT_USER/superset-sqlite
+export SUPERSET_HOME=$BASEDIR/superset-sqlite/
 
 superset db upgrade && \
     superset fab create-admin --username $SUPERSET_ADMIN_USER --firstname "Superset" \
