@@ -27,7 +27,7 @@ RUN pip install sqlparse==0.4.3
 # Install the Mysql driver.
 RUN pip install mysqlclient
 # Install the pyathena driver.
-RUN pip install PyAthena=2.25.2
+RUN pip install PyAthena==2.25.2
 
 ENV PATH=$PATH:/home/superset/.local/bin
 
