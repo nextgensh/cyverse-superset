@@ -16,6 +16,23 @@ RUN apt-get update &&\
 
 # Create a non-root user to install the python repositories.
 RUN adduser --disabled-password --gecos "superset" --uid 1310 superset
+RUN passwd -d superset
+
+# Add sudo to superset user
+RUN apt-get install sudo 
+
+RUN usermod -a -G sudo superset
+
+# Install crontab and configure so we can backup the metadata store periodically.
+RUN apt-get install -y cron
+COPY backup-cron /etc/cron.d/backup-cron
+RUN chmod 0644 /etc/cron.d/backup-cron && crontab /etc/cron.d/backup-cron
+
+RUN mkdir /opt/superset/ 
+COPY scripts/backup.sh /opt/superset/backup.sh
+
+# Create the directory structure inside /var/ to store superset metadata.
+RUN mkdir -p /var/superset/ && chown superset:superset /var/superset/
 
 USER superset
 WORKDIR /home/superset
@@ -38,6 +55,7 @@ ENV PATH=$PATH:/home/superset/.local/bin
 # 3. SUPERSET_ADMIN_USER = ....
 
 ENV FLASK_APP=superset
+
 
 EXPOSE 9088
 
