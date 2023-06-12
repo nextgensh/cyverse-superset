@@ -15,13 +15,13 @@ RUN apt-get update &&\
         default-libmysqlclient-dev
 
 # Create a non-root user to install the python repositories.
-RUN adduser --disabled-password --gecos "superset" --uid 1310 superset
-RUN passwd -d superset
+#RUN adduser --disabled-password --gecos "superset" --uid 1310 superset
+#RUN passwd -d superset
 
 # Add sudo to superset user
 RUN apt-get install sudo 
 
-RUN usermod -a -G sudo superset
+#RUN usermod -a -G sudo superset
 
 # Install crontab and configure so we can backup the metadata store periodically.
 RUN apt-get install -y cron
@@ -32,10 +32,14 @@ RUN mkdir /opt/superset/
 COPY scripts/backup.sh /opt/superset/backup.sh
 
 # Create the directory structure inside /var/ to store superset metadata.
-RUN mkdir -p /var/superset/ && chown superset:superset /var/superset/
+RUN mkdir -p /var/superset/
+#    && chown superset:superset /var/superset/
 
-USER superset
-WORKDIR /home/superset
+RUN mkdir -p /var/superset-home/
+WORKDIR /var/superset-home
+
+#USER superset
+#WORKDIR /home/superset
 
 RUN pip install apache-superset
 # sqlparse needs to be downgraded to avoid the `sqlparse.keywords.FLAGS not found` error.
@@ -46,7 +50,7 @@ RUN pip install mysqlclient
 # Install the pyathena driver.
 RUN pip install PyAthena==2.25.2
 
-ENV PATH=$PATH:/home/superset/.local/bin
+#ENV PATH=$PATH:/home/superset/.local/bin
 
 # entry.sh will need the following environment variables to be correctly
 # passed / set for them to work.
