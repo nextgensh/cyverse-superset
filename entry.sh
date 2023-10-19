@@ -4,20 +4,7 @@
 # Create a folder to find the external volume
 mkdir -p /data-store/iplant/home/"$IPLANT_USER"/superset-sqlite
 
-export SUPERSET_HOME=/var/superset
-
-cd /data-store/iplant/home/"$IPLANT_USER"/superset-sqlite/
-
-# Recover the database file from remote storage.
-if [ -f superset.db ]; then
-	echo "Local db file found, reusing it"
-	cp superset.db /var/superset/
-else
-	echo "Local db file not found. Starting new."
-fi
-
-# Start the cron deamon
-cron start
+export SUPERSET_HOME=/data-store/iplant/home/"$IPLANT_USER"/superset-sqlite/
 
 superset db upgrade 
 superset fab create-admin --username "$SUPERSET_ADMIN_USER" --firstname "Superset" \
