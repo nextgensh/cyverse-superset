@@ -1,7 +1,9 @@
-# These are env variables passed to the container at run-time.
-
+SECRET_KEY=
+MDH_SECRET=
+MDH_ACC_NAME=
+MDH_PROJECT_ID=
+MDH_SCHEMA=
+MDH_S3=
 SUPERSET_ADMIN_USER=
 SUPERSET_ADMIN_PASS=
-# Used to encrypt and secure the local sqlite db. Generate using `openssl rand -base64 42`  
-SUPERSET_SECRET_KEY=
 IPLANT_USER=

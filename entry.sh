@@ -14,15 +14,14 @@ if [ -f superset.db ]; then
 	cp superset.db /var/superset/
 else
 	echo "Local db file not found. Starting new."
+    superset db upgrade
+    superset fab create-admin --username "$SUPERSET_ADMIN_USER" --firstname "Superset" \
+                                    --lastname "admin" --email "admin@foo.org" \
+                                    --password "$SUPERSET_ADMIN_PASS"
+    superset init
 fi
 
 # Start the cron deamon
-cron start
-
-superset db upgrade 
-superset fab create-admin --username "$SUPERSET_ADMIN_USER" --firstname "Superset" \
-                                --lastname "admin" --email "admin@foo.org" \
-                                --password "$SUPERSET_ADMIN_PASS"
-superset init
+sudo cron start
 
 exec superset run -h 0.0.0.0 -p 9088 --with-threads
